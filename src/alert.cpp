@@ -4,9 +4,17 @@ bool isBatteryOverheat(double tempC) {
     return tempC > kBatteryOverheatC;
 }
 
+bool isOverSpeeding(double speedKmh) {
+    return speedKmh > kSpeedLimit;
+}
+
 bool shouldAlert(const VehicleSignal& signal) {
     if (signal.name == "battery_temp") {
         return isBatteryOverheat(signal.value);
     }
-    return false;  // other signals have no alert rule yet
+
+    if(signal.name == "vehicle_speed") {
+        return isOverSpeeding(signal.value);
+    }
+    return false;
 }

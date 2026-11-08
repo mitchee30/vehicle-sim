@@ -16,4 +16,17 @@ TEST(BatteryOverheatTest, ExactlyAtLimitIsNormal) {
 TEST(ShouldAlertTest, OnlyBatteryTempTriggersAlert) {
     EXPECT_TRUE(shouldAlert({"battery_temp", 70.0, 0}));
     EXPECT_FALSE(shouldAlert({"vehicle_speed", 70.0, 0}));
+    EXPECT_TRUE(shouldAlert({"vehicle_speed", 220.0, 0}));
+}
+
+TEST(OverspeedTest, AboveLimitIsOverspeed) {
+    EXPECT_TRUE(isOverSpeeding(210.0));
+}
+
+TEST(OverspeedTest, BelowLimitIsNormal) {
+    EXPECT_FALSE(isOverSpeeding(120.0));
+}
+
+TEST(OverspeedTest, ExactlyAtLimitIsNormal) {
+    EXPECT_FALSE(isOverSpeeding(200.0));
 }
